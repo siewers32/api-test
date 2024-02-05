@@ -1,9 +1,9 @@
-<?php 
+<?php
 $host = '127.0.0.1';
 $db   = 'autoverhuur';
 $user = 'root';
-$pass = '';
-$port = 3306;
+$pass = 'root';
+$port = 8889;
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
@@ -15,11 +15,13 @@ $options = [
 $pdo = new PDO($dsn, $user, $pass, $options);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    echo '{"jo":"jo"}';
+    //echo '{"jo":"jo"}';
+    echo json_encode($_GET);
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pre = $_POST;
+    //$pre = $_POST;
+    $pre = json_decode(file_get_contents('php://input'), true);
+    //$pre = $_POST;
     $sql = "SELECT * FROM autos";
     $stmt = $pdo->query($sql);
     $result = $stmt->fetchAll();
