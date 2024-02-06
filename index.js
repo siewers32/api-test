@@ -21,12 +21,12 @@ getButton.addEventListener("click", () => {
     // POST method to register a user
     const frm = document.getElementById("fla")
     fdata = formSerialize(frm)
-    //fdata = frm
 
     sendHttpRequest("POST", "http://localhost:"+ port +"/api.php", fdata)
       .then((responseData) => {
         dataDiv.textContent = JSON.stringify(responseData);
         console.log(responseData);
+        frm.token.value = responseData.request.token
       })
       .catch((error) => {
         dataDiv.textContent = JSON.stringify(error);

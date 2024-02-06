@@ -18,13 +18,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     //echo '{"jo":"jo"}';
     echo json_encode($_GET);
 }
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //$pre = $_POST;
-    $pre = json_decode(file_get_contents('php://input'), true);
-    //$pre = $_POST;
-    $sql = "SELECT * FROM autos";
-    $stmt = $pdo->query($sql);
-    $result = $stmt->fetchAll();
-    $data = [$pre, $result];
+    // Manually create $_POST server array
+    $pre = file_get_contents('php://input');
+    parse_str(trim($pre, "\""), $_POST);
+
+    // Clear token
+    if (isset($_POST["action"]) && $_POST["action"] == "logout") {
+        //setcookie("token", "", time() - 3600);
+        if (isset($_COOKIE["token"])) {
+            setcookie('token', 'content', 1);
+        }
+        $token = "no token";
+    } else {
+        // Check if token is set
+        $token = "no token";
+        if (!isset($_COOKIE["token"])) {
+            $token = uniqid();
+            setcookie('token', $token, ["expires" => time() + 3600, "httponly" => true]);
+        } else if ($_COOKIE["token"] == "") {
+            $token = uniqid();
+            $_COOKIE["token"] = $token;
+        } else {
+            $token = $_COOKIE["token"];
+        }
+    }
+
+    $resp = ["token" => $token];
+    $data = ["request" => $_POST, "response" => $resp, "token" => $token];
+    // $sql = "SELECT * FROM autos";
+    // $stmt = $pdo->query($sql);
+    // $result = $stmt->fetchAll();
+    // $data = ["req" => $_POST, "resp" => $result];
+    // $myfile = fopen("testfile.txt", "w");
+    // $txt = $pre;
+    // fwrite($myfile, trim($pre, "\""));
+    // fclose($myfile);
     echo json_encode($data);
 }
