@@ -1,4 +1,5 @@
 <?php
+session_start();
 $host = '127.0.0.1';
 $db   = 'autoverhuur';
 $user = 'root';
@@ -26,15 +27,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     parse_str(trim($pre, "\""), $_POST);
 
     // Clear token
+    $token = "";
+    $user = "";
     if (isset($_POST["action"]) && $_POST["action"] == "logout") {
-        //setcookie("token", "", time() - 3600);
+        // clear session
+        $_SESSION = [];
+        session_destroy();
+        // setcookie("token", "", time() - 3600);
         if (isset($_COOKIE["token"])) {
             setcookie('token', 'content', 1);
         }
-        $token = "no token";
     } else {
         // Check if token is set
-        $token = "no token";
         if (!isset($_COOKIE["token"])) {
             $token = uniqid();
             setcookie('token', $token, ["expires" => time() + 3600, "httponly" => true]);
@@ -46,8 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $resp = ["token" => $token];
-    $data = ["request" => $_POST, "response" => $resp, "token" => $token];
+    $resp = [
+        "cookie_token" => $token,
+        "session_id" => session_id(),
+    ];
+    $data = [
+        "request" => $_POST,
+        "response" => $resp,
+    ];
     // $sql = "SELECT * FROM autos";
     // $stmt = $pdo->query($sql);
     // $result = $stmt->fetchAll();
