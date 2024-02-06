@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if token is set
         if (!isset($_COOKIE["token"])) {
             $token = uniqid();
-            setcookie('token', $token, ["expires" => time() + 3600, "httponly" => true]);
+            setcookie('token', $token, ["expires" => time() + 24 * 3600, "httponly" => true]);
         } else if ($_COOKIE["token"] == "") {
             $token = uniqid();
             $_COOKIE["token"] = $token;
