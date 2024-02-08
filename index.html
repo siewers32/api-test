@@ -5,55 +5,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | API-Test</title>
-    <script src="main.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/modal.js" defer></script>
+    <script src="js/routes.js" defer></script>
+    <style>
+        * {
+            font-size:16px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        div#app {
+            margin: auto;
+            width:80%;
+            padding:1rem;
+        }
+        
+
+        div.endpoint {
+            display:flex;
+            border-radius: 0.5rem;
+            border: 1px solid black;
+            padding:0.25rem;
+            background-color: white;
+        }
+
+        div.post {
+            border: 1px solid rgb(0, 117, 0);
+            background-color: rgb(207, 245, 207);
+        }
+
+        .post input[type=button] {
+            background-color: rgb(68, 208, 68);
+        }
+
+        div.get {
+            border: 1px solid rgb(0, 51, 117);
+            background-color: rgb(207, 229, 245);
+        }
+
+        .get input[type=button] {
+            background-color: rgb(68, 166, 208);
+        }
+
+        div.route-text {
+            margin-left:1rem;
+            padding-top:5px;
+            font-weight:bold;
+        }
+
+        div.post input[type=button] {
+            width:120px;
+            height:30px;
+            text-align: center;
+            border-radius:4px;
+            background-color: rgb(68, 208, 68);
+            color:white;
+        }
+
+    </style>
 </head>
+
 
 <body>
     <div id="app">
-        <form id="loginform">
-            Login <input type="text" name="login" value=""><br>
-            Password <input type="password" name="password" value=""><br>
-            <input type="button" name="loginbutton" id="loginbutton" value="login" onclick="flogin(this.parentElement)">
-            <input type="button" name="logoutbutton" id="logoutbutton" value="logout" onclick="flogout()">
-            <input type="button" name="showbutton" id="showbutton" value="show" onclick="fshow()">
-        </form>
+        <dialog>
+            <button autofocus>Close</button>
+            <form id="loginform">
+                Login <input type="text" name="login" value=""><br>
+                Password <input type="password" name="password" value=""><br>
+                <input type="button" name="loginbutton" id="loginbutton" value="login" onclick="flogin(this.parentElement)">
+            </form>
+        </dialog>
+        <button>Authenticate</button>
+        <div class="endpoint post">
+            <input type="button" name="logoutbutton" id="logoutbutton" value="POST" onclick="flogout()">
+            <div class="route-text">/api/v1/api.php?q=logout</div>
+        </div>
+        <div class="endpoint get">
+            <input type="button" name="logoutbutton" id="logoutbutton" value="POST" onclick="flogout()">
+            <div class="route-text">/api/v1/api.php?q=logout</div>
+        </div>
+        <div>
+            <input type="button" name="showbutton" id="showbutton" value="POST" onclick="fshow()">
+        </div>
     </div>
     <script>
-        const api = "http://localhost:8777/api/v1/api.php"
-        function flogin(frm) {
-            console.log(frm)
-            fdata = new formSerialize(frm);
-            sendHttpRequest("POST", api + "?q=login")
-                .then((data) => {
-                    //console.log(JSON.stringify(data));
-                    console.log(data);
-                    window.localStorage.setItem("token", data.token)
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
 
-        function flogout() {
-            window.localStorage.removeItem("token")
-            sendHttpRequest("POST", api + "?q=logout")
-                .then((data) => {
-                    console.log(data);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-
-        function fshow(frm) {
-            sendHttpRequest("POST", api + "?q=show")
-                .then((data) => {
-                    console.log(data);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
     </script>
 </body>
 
