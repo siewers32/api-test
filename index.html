@@ -2,31 +2,59 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Website</title>
-  <link rel="stylesheet" href="./styles.css" />
-  <script src="./index.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | API-Test</title>
+    <script src="main.js" defer></script>
 </head>
 
 <body>
-  <h1>Data Fetching in JavaScript</h1>
-  <button id="getButton">GET Data</button>
-  <button id="postButton">POST Data</button>
-  <form id="testinfo">
-    <input type="text" name="test" id="test" value="hio"><br>
-    <input type="text" name="test2" id="test2" value="bloep">
-  </form>
-  <form id="fla">
-    <input type="text" name="action" value="&ëÒ&==#@!$" />
-    <input type="text" name="text2" value="bar" />
-    <input type="text" name="text3" value="baz" />
-    <input type="checkbox" name="check" checked disabled />
-    <button name="intent" value="save">Save</button>
-    <button name="intent" value="saveAsCopy">Save As Copy</button>
-  </form>
-  <div id="dataDiv"></div>
+    <div id="app">
+        <form id="loginform">
+            Login <input type="text" name="login" value=""><br>
+            Password <input type="password" name="password" value=""><br>
+            <input type="button" name="loginbutton" id="loginbutton" value="login" onclick="flogin(this.parentElement)">
+            <input type="button" name="logoutbutton" id="logoutbutton" value="logout" onclick="flogout()">
+            <input type="button" name="showbutton" id="showbutton" value="show" onclick="fshow()">
+        </form>
+    </div>
+    <script>
+        const api = "http://localhost:8777/api/v1/api.php"
+        function flogin(frm) {
+            console.log(frm)
+            fdata = new formSerialize(frm);
+            sendHttpRequest("POST", api + "?q=login")
+                .then((data) => {
+                    //console.log(JSON.stringify(data));
+                    console.log(data);
+                    window.localStorage.setItem("token", data.token)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        function flogout() {
+            window.localStorage.removeItem("token")
+            sendHttpRequest("POST", api + "?q=logout")
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        function fshow(frm) {
+            sendHttpRequest("POST", api + "?q=show")
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    </script>
 </body>
 
 </html>
