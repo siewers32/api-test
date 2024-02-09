@@ -14,7 +14,9 @@ function flogin(frm) {
         });
 }
 
-function flogout() {
+function flogout(btn) {
+    output = document.querySelector("#logout + .output")
+    output.style.display = "block"
     window.localStorage.removeItem("token")
     sendHttpRequest("POST", api + "?q=logout")
         .then((data) => {
