@@ -1,0 +1,83 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    font-size: 16px;
+}
+
+div#app {
+    margin: auto;
+    width: 80%;
+    padding: 1rem;
+}
+
+
+div.endpoint {
+    display: flex;
+    border-radius: 0.5rem;
+    border: 1px solid black;
+    padding: 0.25rem;
+    background-color: white;
+    margin-bottom: 0.5rem;
+}
+
+div.endpoint input[type=button] {
+    width: 120px;
+    height: 30px;
+    text-align: center;
+    border-radius: 4px;
+    color: white;
+}
+
+div.post {
+    border: 1px solid rgb(0, 117, 0);
+    background-color: rgb(207, 245, 207);
+}
+
+.post input[type=button] {
+    background-color: rgb(68, 208, 68);
+}
+
+div.get {
+    border: 1px solid rgb(0, 51, 117);
+    background-color: rgb(207, 229, 245);
+}
+
+.get input[type=button] {
+    background-color: rgb(84, 170, 207);
+}
+
+div.route {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+div.route-text {
+    margin-left: 1rem;
+    padding-top: 5px;
+    font-weight: bold;
+}
+
+div.output {
+    display: none;
+    width: 100%;
+    min-height: 100px;
+    margin-bottom: 0.5rem;
+    padding: 0px;
+}
+
+form {
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+form div.input {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    max-width: 300px;
+}

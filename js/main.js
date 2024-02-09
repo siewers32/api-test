@@ -2,7 +2,10 @@
 const sendHttpRequest = (method, url, data) => {
   // fetch() returns a Promise object
   if(method == "GET") {
-    headers = {"Content-Type": "application/json"}
+    headers = {
+      "Content-Type": "application/json",
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    }
   } else if (localStorage.getItem('token') === null){
     headers = {
       'Content-Type': 'application/x-www-form-urlencoded',                 
@@ -20,7 +23,7 @@ const sendHttpRequest = (method, url, data) => {
     body: JSON.stringify(data),
     headers: headers,
   }).then((response) => {
-    console.log(response); // response is stream data
+    //console.log(response); // response is stream data
     // Handle HTTP errors
     if (response.status >= 400) {
       // convert stream data to JSON
@@ -35,9 +38,9 @@ const sendHttpRequest = (method, url, data) => {
   });
 };
 
-function formSerialize(form) {
-    const data = new FormData(form);
-    //https://stackoverflow.com/a/44033425/1869660
-    return new URLSearchParams(data).toString();
+function serializeFormData(frm) {
+  const fd = new FormData(frm)
+  return new URLSearchParams(fd).toString()
 }
+
 
