@@ -1,5 +1,5 @@
 <?php
-include("api_functions.php");
+include("controllers.php");
 $req = [];
 $resp = [];
 
@@ -26,13 +26,17 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 // Routes
 if (isset($_GET["q"]) && $_GET["q"] == "login") {
-    // check user login/password and add token to user
-    $userok = true;
-    $login = true;
+    $token = checkLogin($req['inpLogin'], $req['inpPassword']);
+    if ($token) {
+        $resp["msg"] = "Login succesvol";
+        $resp["token"] = $token;
+    } else {
+        $resp["msg"] = "Not authorized";
+        $resp["token"] = false;
+    }
     $req["route"] = $_GET["q"];
-    $resp["token"] = getToken($login, $userok);
-    $resp["msg"] = "Login succesvol";
     $resp["status"] = "200";
+    $resp["debug"] = checkAuthorization();
 }
 
 if (isset($_GET["q"]) && $_GET["q"] == "logout") {
@@ -42,11 +46,12 @@ if (isset($_GET["q"]) && $_GET["q"] == "logout") {
 }
 
 if (isset($_GET["q"]) && $_GET["q"] == "show") {
-    // check token
-    $userok = true;
+
+    $userok = false;
     $login = false;
     $resp["token"] = getToken($login, $userok);
     $resp["msg"] = "Just showing";
+    $resp["data"] = showCars();
 }
 
 header("Content-Type: application/json; charset=UTF-8");

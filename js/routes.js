@@ -12,6 +12,7 @@ function flogin(q) {
     const frm = activeForm(q)
     const fdata = serializeFormData(frm)
     const out = jsonCode(q);
+    localStorage.removeItem('token')
     sendHttpRequest("POST", api + "?q=login", fdata)
         .then((data) => {
             //console.log(JSON.stringify(data));
