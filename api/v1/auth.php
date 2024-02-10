@@ -39,24 +39,3 @@ function checkAuthorization()
         return false;
     }
 }
-
-// function getToken($login, $userok)
-// {
-//     //Gebruiker wil inloggen en username en wachtwoord zijn gechecked
-//     if ($login && $userok) {
-//         return uniqid();
-//     }
-
-//     //Gebruiker wil niet inloggen, maar er is al een geldige cookie gezet.
-//     if (!$login && isset($_SERVER['HTTP_AUTHORIZATION'])) {
-//         $auth = explode(" ", $_SERVER['HTTP_AUTHORIZATION']);
-//         if (isset($auth[1]) && $auth[1] != 'null' && $auth[0] == "Bearer" && $userok) {
-//             //check if authorization token belongs to user
-//             return $auth[1];
-//         } else {
-//             return uniqid();
-//         }
-//     } else {
-//         return false;
-//     }
-// }

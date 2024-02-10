@@ -16,7 +16,6 @@ function login($login, $password)
     return $resp;
 }
 
-
 function cars()
 {
     $pdo = conn();
@@ -75,9 +74,3 @@ function getKenteken()
     return $part1 . "-" . $part2 . "-" . $part3;
 }
 
-
-
-function addUser()
-{
-    // Magic to add a user
-}
