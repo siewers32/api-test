@@ -1,5 +1,5 @@
 # Swaggie
-Simpele API met Swagger interface
+Simpele API met Swagger-like interface
 
 ## Backend
 * PHP
@@ -17,6 +17,7 @@ Simpele API met Swagger interface
     * eventueel met config voor debugging (php -c /usr/local/etc/php/8.3/php.ini -S localhost:8777)
     * URL van api => routes.js
 * API Server (api.php)
+    * http://localhost:8777/api/v1/api.php?....
 * Frontend (index.html)
     * Inloggen met Admin/Sysop
 
