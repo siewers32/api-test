@@ -1,29 +1,19 @@
-
-const sendHttpRequest = (method, url, data) => {
-  // fetch() returns a Promise object
+function frequest(q, method) {
+  const frm = activeForm(q)
+  const fdata = serializeFormData(frm)
   if(method == "GET") {
-    headers = {
-      "Content-Type": "application/json",
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    }
-  } else if (localStorage.getItem('token') === null){
-    headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',                 
-      'Accept': '*/*' 
-    }
+      return sendHttpRequest(method, api + "?q=" + q + "&" + fdata)
   } else {
-    headers = {
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
-      'Content-Type': 'application/x-www-form-urlencoded',                 
-      'Accept': '*/*' 
-    }    
+      return sendHttpRequest(method, api + "?q=" + q, fdata)
   }
+}
+const sendHttpRequest = (method, url, data) => {
   return fetch(url, {
     method: method,
     body: JSON.stringify(data),
-    headers: headers,
-  }).then((response) => {
-    //console.log(response); // response is stream data
+    headers: getHeaders(method),
+  }).then((response) => {  
+    console.log(response)
     // Handle HTTP errors
     if (response.status >= 400) {
       // convert stream data to JSON
@@ -41,6 +31,26 @@ const sendHttpRequest = (method, url, data) => {
 function serializeFormData(frm) {
   const fd = new FormData(frm)
   return new URLSearchParams(fd).toString()
+}
+
+function getHeaders(method) {
+  if(method == "GET") {
+    return {
+      "Content-Type": "application/json",
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    }
+  } else if (localStorage.getItem('token') === null){
+    return {
+      'Content-Type': 'application/x-www-form-urlencoded',                 
+      'Accept': '*/*' 
+    }
+  } else {
+    return {
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      'Content-Type': 'application/x-www-form-urlencoded',                 
+      'Accept': '*/*' 
+    }    
+  }
 }
 
 

@@ -19,6 +19,8 @@
 <body>
     <div id="app">
         <h1>Swaggie</h1>
+
+        <!-- /api/v1/api.php?q=login -->
         <div id="login" class="endpoint post">
             <input type="button" name="postLogin" value="POST" onclick="toggleOutput('login')">
             <div class="route" onclick="toggleOutput('login')">
@@ -26,74 +28,105 @@
                 <span class="material-symbols-outlined">lock_open</span>
             </div>
         </div>
+
         <div class="output">
             <form id="frmLogin">
                 <h3>Login</h3>
+                <label class="input">
+                    <span>Login</span>
+                    <input type="text" name="login" value="Admin">
+                </label>
+                <label class="input">
+                    <span>Password</span>
+                    <input type="password" name="password" value="Sysop">
+                </label>
                 <div class="input">
-                    <label for="login">Login</label>
-                    <input type="text" id="inpLogin" name="inpLogin" value="Admin">
-                </div>
-                <div class="input">
-                    <label for="password">Password</label>
-                    <input type="password" id="inpPassword" name="inpPassword" value="Sysop">
-                </div>
-                <div class="input">
-                    <input type="button" id="btnLogin" value="login" onclick="flogin('login')">
+                    <input type="button" name="btn" value="login" onclick="flogin('login')">
                 </div>
             </form>
-            <pre><code class="language-javascript"></code></pre>
+            <pre><code class="language-json"></code></pre>
         </div>
 
+        <!-- /api/v1/api.php?q=logout -->
         <div id="logout" class="endpoint post">
-            <input type="button" name="logout" value="POST" onclick="flogout('logout')">
+            <input type="button" name="logout" value="POST" onclick="toggleOutput('logout')">
             <div class="route" onclick="toggleOutput('logout')">
                 <div class="route-text">/api/v1/api.php?q=logout</div>
                 <span class="material-symbols-outlined">lock</span>
             </div>
         </div>
         <div class="output">
-            <pre><code class="language-json">{ "color:" "red" }</code></pre>
+            <form id="frmLogout">
+                <h3>Logout</h3>
+                <label class="input">
+                    <input type="button" value="Send" onclick="flogout()">
+                </label>
+            </form>
+            <pre><code class="language-json"></code></pre>
         </div>
 
-
-        <div id="get" class="endpoint get">
-            <input type="button" name="btnGet" id="btnGet" value="GET" onclick="toggleOutput('get')">
-            <div class="route" onclick="toggleOutput('get')">
-                <div class="route-text">/api/v1/api.php?q=get&test=hallo&pipo=clown</div>
-                <span class="material-symbols-outlined">lock_open</span>
+        <!-- /api/v1/api.php?q=car -->
+        <div id="car" class="endpoint get">
+            <input type="button" name="btnGet" value="GET" onclick="toggleOutput('car')">
+            <div class="route" onclick="toggleOutput('car')">
+                <div class="route-text">/api/v1/api.php?q=car</div>
+                <span class="material-symbols-outlined">lock</span>
             </div>
         </div>
         <div class="output">
-            <form id="frmGet">
-                <h3>Get</h3>
+            <form id="frmCar">
+                <h3>Add a Car</h3>
+                <label class="input">
+                    <span>Merk</span>
+                    <input type="text" name="merk" value="">
+                </label>
+                <label class="input">
+                    <span>Type</span>
+                    <input type="text" name="type" value="">
+                </label>
                 <div class="input">
-                    <label for="prms">Merk</label>
-                    <input type="text" id="inpMerk" name="inpMerk" value="">
-                </div>
-                <div class="input">
-                    <label for="prms">Type</label>
-                    <input type="text" id="inpType" name="inpType" value="">
-                </div>
-                <div class="input">
-                    <input type="button" id="btnGetSend" value="GET" onclick="fget('get')">
+                    <input type="button" value="GET" onclick="fcar()">
                 </div>
             </form>
             <pre><code class="language-json"></code></pre>
         </div>
 
-        <div id="show" class="endpoint post">
-            <input type="button" name="btnShow" id="btnShow" value="POST" onclick="toggleOutput('show')">
-            <div class="route" onclick="toggleOutput('show')">
-                <div class="route-text">/api/v1/api.php?q=show</div>
+        <!-- /api/v1/api.php?q=cars -->
+        <div id="cars" class="endpoint post">
+            <input type="button" name="btnShow" value="POST" onclick="toggleOutput('cars')">
+            <div class="route" onclick="toggleOutput('cars')">
+                <div class="route-text">/api/v1/api.php?q=cars</div>
+                <span class="material-symbols-outlined">lock_open</span>
+            </div>
+        </div>
+        <div class="output">
+            <form id="frmCars">
+                <h3>Cars</h3>
+                <label class="input">
+                    <input type="button" value="Send" onclick="fcars()">
+                </label>
+            </form>
+            <pre><code class="language-json"></code></pre>
+        </div>
+
+        <!-- /api/v1/api.php?q=delete_car -->
+        <div id="delete_car" class="endpoint delete">
+            <input type="button" name="btnShow" value="DELETE" onclick="toggleOutput('delete_car')">
+            <div class="route" onclick="toggleOutput('delete_car')">
+                <div class="route-text">/api/v1/api.php?q=delete_car</div>
                 <span class="material-symbols-outlined">lock</span>
             </div>
         </div>
         <div class="output">
-            <form id="frmShow">
-                <h3>Show</h3>
-                <div class="input">
-                    <input type="button" id="btnShowSend" value="Send" onclick="fpost('show')">
-                </div>
+            <form id="frmDelete_car">
+                <h3>Delete a car</h3>
+                <label class="input">
+                    <span>Kenteken</span>
+                    <input type="text" name="kenteken" value="">
+                </label>
+                <label class="input">
+                    <input type="button" value="Send" onclick="fdelete_car()">
+                </label>
             </form>
             <pre><code class="language-json"></code></pre>
         </div>

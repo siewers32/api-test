@@ -25,53 +25,41 @@ function flogin(q) {
         });
 }
 
-function flogout(q) {
-    const out = jsonCode(q);
-    toggleOutput(q)
-    window.localStorage.removeItem("token")
-    sendHttpRequest("POST", api + "?q=logout")
-        .then((data) => {
-            console.log(data);
-            out.innerText = JSON.stringify(data, null, 3)
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+function flogout() {
+    localStorage.removeItem("token")
+    frequest('logout', "POST").then((data) => {
+        console.log(data)
+        jsonCode('logout').innerText = JSON.stringify(data, null, 3)
+    })
+    .catch((error) => {
+        console.error(error);
+    });
 }
 
-function fshow(frm) {
-    sendHttpRequest("POST", api + "?q=show")
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+function fcar() {
+    frequest('car', "GET").then((data) => {
+        console.log(data)
+        jsonCode('car').innerText = JSON.stringify(data, null, 3)
+    })
+    .catch((error) => {
+        console.error(error);
+    });
 }
 
-function fget(q) {
-    const frm = activeForm(q)
-    const fdata = serializeFormData(frm)
-    const out = jsonCode(q);
-    sendHttpRequest("GET", api + "?q=get&" + fdata)
-        .then((data) => {
-            console.log(data);
-            out.innerText = JSON.stringify(data, null, 3)
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+function fcars() {
+    frequest('cars', "POST").then((data) => {
+        console.log(data)
+        jsonCode('cars').innerText = JSON.stringify(data, null, 3)
+    })
+    .catch((error) => {
+        console.error(error);
+    });
 }
 
-function fpost(q) {
-    const frm = activeForm(q)
-    const fdata = serializeFormData(frm)
-    const out = jsonCode(q);
-    sendHttpRequest("POST", api + "?q=" + q, fdata)
-    .then((data) => {
-        //console.log(JSON.stringify(data));
-        console.log(data);
-        out.innerText = JSON.stringify(data, null, 3)
+function fdelete_car() {
+    frequest('delete_car', "DELETE").then((data) => {
+        console.log(data)
+        jsonCode('delete_car').innerText = JSON.stringify(data, null, 3)
     })
     .catch((error) => {
         console.error(error);

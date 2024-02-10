@@ -48,6 +48,15 @@ div.get {
     background-color: rgb(84, 170, 207);
 }
 
+div.delete {
+    border: 1px solid rgb(117, 21, 0);
+    background-color: rgb(255, 205, 181);
+}
+
+.delete input[type=button] {
+    background-color: rgb(255, 84, 50);
+}
+
 div.route {
     display: flex;
     justify-content: space-between;
@@ -75,7 +84,7 @@ form {
     margin-bottom: 0.5rem;
 }
 
-form div.input {
+label.input {
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.5rem;
