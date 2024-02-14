@@ -24,6 +24,7 @@ const sendHttpRequest = (method, url, data) => {
         throw error;
       });
     }
+    console.log("hello " + response.json())
     return response.json();
   });
 };
@@ -33,11 +34,23 @@ function serializeFormData(frm) {
   return new URLSearchParams(fd).toString()
 }
 
+
+
+function toggleOutput(what) {
+  out = document.querySelector(`#${CSS.escape(what)} + .output`);
+  if (out.style.display == 'none'|| out.style.display == '') {
+    out.style.display = 'block'
+  } else {
+    out.style.display = 'none'
+  }
+}
+
 function getHeaders(method) {
   if(method == "GET") {
     return {
       "Content-Type": "application/json",
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      
     }
   } else if (localStorage.getItem('token') === null){
     return {
@@ -50,14 +63,5 @@ function getHeaders(method) {
       'Content-Type': 'application/x-www-form-urlencoded',                 
       'Accept': '*/*' 
     }    
-  }
-}
-
-function toggleOutput(what) {
-  out = document.querySelector(`#${CSS.escape(what)} + .output`);
-  if (out.style.display == 'none'|| out.style.display == '') {
-    out.style.display = 'block'
-  } else {
-    out.style.display = 'none'
   }
 }
