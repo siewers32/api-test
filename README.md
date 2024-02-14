@@ -41,3 +41,4 @@ Simpele API met Swagger-like interface
 
 ## Links
 * [Medium artikel](https://adityan150.medium.com/3-ways-to-fetch-data-from-an-api-endpoint-in-javascript-638fc4ec0ad6)
+* [Medium artikel over async vs .then](https://dev.to/masteringjs/using-then-vs-async-await-in-javascript-2pma)

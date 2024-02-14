@@ -40,15 +40,15 @@
                     <input type="password" name="password" value="Sysop">
                 </label>
                 <div class="input">
-                    <input type="button" name="btn" value="login" onclick="flogin('login')">
+                    <input type="button" name="btn" value="login" onclick="flogin()">
                 </div>
             </form>
             <pre><code class="language-json"></code></pre>
         </div>
 
         <!-- /api/v1/api.php?q=logout -->
-        <div id="logout" class="endpoint post">
-            <input type="button" name="logout" value="POST" onclick="toggleOutput('logout')">
+        <div id="logout" class="endpoint get">
+            <input type="button" name="logout" value="GET" onclick="toggleOutput('logout')">
             <div class="route" onclick="toggleOutput('logout')">
                 <div class="route-text">/api/v1/api.php?q=logout</div>
                 <span class="material-symbols-outlined">lock</span>
@@ -102,8 +102,12 @@
             <form id="frmCars">
                 <h3>Cars</h3>
                 <label class="input">
-                    <input type="button" value="Send" onclick="fcars()">
+                    <span>API Time-out</span>
+                    <input type="number" name="timeout" value="0">
                 </label>
+                <label class="input">
+                    <input type="button" value="Send" onclick="fcars()">
+                </label>                
             </form>
             <pre><code class="language-json"></code></pre>
         </div>

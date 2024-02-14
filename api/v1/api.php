@@ -16,6 +16,7 @@ switch ($route) {
         $resp["msg"] = "Logout succesvol";
         break;
     case 'cars':
+        sleep($req["timeout"]);
         $resp = cars();
         break;
     case 'car':

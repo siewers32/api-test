@@ -8,32 +8,26 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function flogin(q) {
-    const frm = activeForm(q)
+async function flogin() {
+    const frm = activeForm('login')
     const fdata = serializeFormData(frm)
-    const out = jsonCode(q);
     localStorage.removeItem('token')
-    sendHttpRequest("POST", api + "?q=login", fdata)
-        .then((data) => {
-            //console.log(JSON.stringify(data));
-            console.log(data);
-            window.localStorage.setItem("token", data.resp.token)
-            out.innerText = JSON.stringify(data, null, 3)
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+    let response = await fetch(api + "/?q=login", getOptions("POST", fdata))
+    if (errorCheck(response)) {
+      let result = await response.json()
+      localStorage.setItem("token", result.resp.token)
+      jsonCode('login').innerText = JSON.stringify(result, null, 3)
+  }
 }
 
-function flogout() {
+async function flogout() {
     localStorage.removeItem("token")
-    frequest('logout', "POST").then((data) => {
-        console.log(data)
-        jsonCode('logout').innerText = JSON.stringify(data, null, 3)
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+    let response = await fetch(api + "/?q=logout", getOptions("GET", ""))
+    if (errorCheck(response)) {
+      let result = await response.json()
+      jsonCode('logout').innerText = JSON.stringify(result, null, 3)
+      console.log(result);
+  }
 }
 
 async function fcar() {
@@ -44,47 +38,53 @@ async function fcar() {
     if (errorCheck(response)) {
         let result = await response.json()
         jsonCode('car').innerText = JSON.stringify(result, null, 3)
-        console.log(result);
     }
 }
  
 async function fcars() {
-  let response = await fetch(api + "/?q=cars", getOptions())
+  const fdata = getFormData('cars')
+  let response = await fetch(api + "/?q=cars", getOptions("POST", fdata))
   if (errorCheck(response)) {
       let result = await response.json()
       jsonCode('cars').innerText = JSON.stringify(result, null, 3)
-      console.log(result);
   }
 }
 
-function getFormData(q) {
-  const frm = activeForm(q)
-  return serializeFormData(frm)
+async function fdelete_car() {
+  const fdata = getFormData('delete_car')
+  let response = await fetch(api + "/?q=delete_car", getOptions("DELETE", fdata))
+  if (errorCheck(response)) {
+    let result = await response.json()
+    jsonCode('delete_car').innerText = JSON.stringify(result, null, 3)
+    console.log(result);
+  }
 }
 
+
+
 function getOptions(method, data) {
+  let options = {}
+  options.method = method
   if(method == "GET") {
-    headers = {
+    options.headers = {
       "Content-Type": "application/json",
       'Authorization': 'Bearer ' + localStorage.getItem('token'),     
     }
   } else if (localStorage.getItem('token') === null){
-    headers = {
+    options.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',                 
       'Accept': '*/*' 
     }
+    options.body = JSON.stringify(data) 
   } else {
-    headers =  {
+    options.headers =  {
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
       'Content-Type': 'application/x-www-form-urlencoded',                 
       'Accept': '*/*' 
-    }    
+    }
+    options.body = JSON.stringify(data) 
   }
-  return  {
-    method:method,
-    headers: headers,
-    body: JSON.stringify(data),
-  }
+  return options
 }
 
 function errorCheck(response) {
@@ -96,14 +96,8 @@ function errorCheck(response) {
       return false;
   }
 }
-  
-function fdelete_car() {
-    frequest('delete_car', "DELETE").then((data) => {
-        console.log(data)
-        jsonCode('delete_car').innerText = JSON.stringify(data, null, 3)
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-}
 
+function getFormData(q) {
+  const frm = activeForm(q)
+  return serializeFormData(frm)
+}
